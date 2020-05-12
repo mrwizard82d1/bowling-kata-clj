@@ -1,9 +1,17 @@
 (ns bowling-kata.core)
 
-;;; This is an incorrect implementation, such as might be written by
-;;; someone who was used to a Lisp in which an empty list is equal to
-;;; nil.
-(defn first-element [sequence default]
-  (if (nil? sequence)
-    default
-    (first sequence)))
+
+(defn score-mapper [score]
+  (case score
+    ("-" "F") 0
+    score))
+
+
+(defn pinfall [frame]
+  (when (and (first frame) (second frame))
+    (apply + (map score-mapper frame))))
+
+
+(defn score-frame [frame-number game]
+  (when-let [rolls (get-in game [frame-number :rolls])]
+    (pinfall rolls)))
