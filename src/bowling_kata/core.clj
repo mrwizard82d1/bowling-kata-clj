@@ -1,17 +1,17 @@
 (ns bowling-kata.core)
 
 
-(defn score-mapper [score]
+(defn score-roll [score]
   (case score
     ("-" "F") 0
     score))
 
 
-(defn pinfall [frame]
-  (when (and (first frame) (second frame))
-    (apply + (map score-mapper frame))))
+(defn score-rolls [rolls]
+  (when (and (first rolls) (second rolls))
+    (apply + (map score-roll rolls))))
 
 
 (defn score-frame [frame-number game]
   (when-let [rolls (get-in game [frame-number :rolls])]
-    (pinfall rolls)))
+    (score-rolls rolls)))

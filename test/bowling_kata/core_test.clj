@@ -5,6 +5,19 @@
 (fact "canary test"
   (+ 2 2) => 4)
 
+(fact "score roll"
+    (bkc/score-roll "-") => 0
+    (bkc/score-roll "F") => 0
+    (bkc/score-roll 4) => 4)
+
+
+(fact "score rolls"
+    (bkc/score-rolls [5 3]) => 8
+    (bkc/score-rolls ["-" 1]) => 1
+    (bkc/score-rolls ["F" 2]) => 2
+    (bkc/score-rolls ["-" "-"]) => 0)
+
+
 (facts "correctly calculate open frames"
   (fact "correctly calculate frame with gutter ball"
     (bkc/score-frame 3 {3 {:rolls ["-" "-"]}}) => 0
