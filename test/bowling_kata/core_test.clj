@@ -15,6 +15,34 @@
     (bkc/score-roll "X") => 10)
 
 
+(fact "characterize frame"
+  (fact "spare frame"
+    (bkc/spare-frame? {:rolls [2 "/"]}) => truthy
+    (bkc/spare-frame? {:rolls ["-" "/"]}) => truthy
+    (bkc/spare-frame? {:rolls ["F" "/"]}) => truthy
+    (bkc/spare-frame? {:rolls [2 "-"]}) => falsey
+    (bkc/spare-frame? {:rolls ["/" 2]}) => falsey
+    (bkc/spare-frame? {:rolls ["/" "-"]}) => falsey
+    (bkc/spare-frame? {:rolls ["/" "F"]}) => falsey)
+  (fact "strike frame"
+    (bkc/strike-frame? {:rolls ["X"]}) => truthy
+    (bkc/strike-frame? {:rolls ["/" 2]}) => falsey
+    (bkc/strike-frame? {:rolls [5 4]}) => falsey
+    (bkc/strike-frame? {:rolls ["F" "X"]}) => falsey)
+  (fact "mark frame"
+    (bkc/mark-frame? {:rolls ["X"]}) => truthy
+    (bkc/mark-frame? {:rolls [8 "/"]}) => truthy
+    (bkc/mark-frame? {:rolls  [8 "-"]}) => falsey)
+  (fact "open frame"
+    (bkc/open-frame? {:rolls [7 2]}) => truthy
+    (bkc/open-frame? {:rolls ["F" 2]}) => truthy
+    (bkc/open-frame? {:rolls [2 "-"]}) => truthy
+    (bkc/open-frame? {:rolls ["-" "-"]}) => truthy
+    (bkc/open-frame? {:rolls ["X"]}) => falsey
+    (bkc/open-frame? {:rolls [4 "/"]}) => falsey))
+
+
+
 ;; (facts "correctly calculate open frames"
 ;;   (fact "correctly calculate frame with gutter ball"
 ;;     (bkc/score-frame 3 {3 {:rolls ["-" "-"]}}) => 0
