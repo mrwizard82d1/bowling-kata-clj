@@ -42,6 +42,14 @@
     (bkc/open-frame? {:rolls [4 "/"]}) => falsey))
 
 
+(fact "score frame alone"
+      (bkc/score-frame-alone {:rolls ["-" "-"]}) => 0
+      (bkc/score-frame-alone {:rolls ["F" 9]}) => 9
+      (bkc/score-frame-alone {:rolls [4 "-"]}) => 4
+      (bkc/score-frame-alone {:rolls [6 2]}) => 8
+      (bkc/score-frame-alone {:rolls ["X"]}) => 10
+      (bkc/score-frame-alone {:rolls [5 "/"]}) => 10)
+
 
 ;; (facts "correctly calculate open frames"
 ;;   (fact "correctly calculate frame with gutter ball"

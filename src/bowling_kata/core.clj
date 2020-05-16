@@ -25,10 +25,14 @@
 (def open-frame? (complement mark-frame?))
 
 
-(defn score-frame [frame])
+(defn score-frame-alone [frame]
+  (if (not (spare-frame? frame))
+    (apply + (map score-roll (:rolls frame)))
+    (score-roll (second (:rolls frame)))))
 
 
-(defn frame [game frame-number])
+(defn frame [game frame-number]
+  (get game frame-number))
 
 
 (defn bonus-pins [game frame-number])
@@ -36,7 +40,7 @@
 
 (defn score-frame [game frame-number]
   (let [frame-to-score (frame game frame-number)
-        frame-score (score-frame frame)]
+        frame-score (score-frame-alone frame-number)]
     (cond
       (open-frame? frame-to-score) frame-score
       (mark-frame? frame-to-score) (+ frame-score (bonus-pins game frame-number)))))
